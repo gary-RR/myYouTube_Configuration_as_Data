@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-world-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-world-db
+  template:
+    metadata:
+      labels:
+        app: hello-world-db
+    spec:
+      containers:
+      - name: hello-world
+        image: gcr.io/google-samples/hello-app:1.0
+        env:
+        - name: DB_POSTGRES_HOST
+          value: "postgress.local"
+        - name: DB_POSTGRES_PORT_NUMBER
+          value: "5432"
+        - name: DB_POSTGRES_DATABASE_NAME
+          value: "sales" 
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-world-db
+spec:
+  selector:
+    app: hello-world-db
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: ClusterIP

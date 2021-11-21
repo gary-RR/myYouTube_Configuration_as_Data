@@ -1,0 +1,2 @@
+SV_EXTERNAL_SERVICE_HOST_NAME="server1.stage.acme.org"
+SV_PORT_NUMBE="9002"
